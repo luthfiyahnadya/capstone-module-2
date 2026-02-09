@@ -45,12 +45,7 @@ Sistem manajemen inventori sederhana yang dirancang khusus untuk indie seller ya
 
 1. **Install Python** (versi 3.6 atau lebih baru)
 
-2. **Install Library yang Dibutuhkan:**
-```bash
-pip install prettytable
-```
-
-3. **Jalankan Program:**
+2. **Jalankan Program:**
 ```bash
 python "Capstone 2 - Nadya_Luthfiyah.py"
 ```
