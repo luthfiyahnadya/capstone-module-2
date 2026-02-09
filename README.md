@@ -43,7 +43,7 @@ Sistem manajemen inventori sederhana yang dirancang khusus untuk indie seller ya
 
 ### Instalasi & Setup
 
-1. **Install Python** (versi 3.6 atau lebih baru)
+1. **Install Python**
 
 2. **Jalankan Program:**
 ```bash
@@ -113,15 +113,13 @@ Menampilkan tabel daftar event dengan nomor urut dan nama event.
 ### 6. Tambah Event Baru
 1. Program menampilkan daftar event saat ini
 2. Input nama event baru
-3. Program mencegah duplikat event
-4. Event ditambahkan ke daftar
+3. Event ditambahkan ke daftar
 
 ### 7. Update Event
 1. Pilih nomor event yang ingin diupdate
 2. Program menampilkan nama event saat ini
 3. Input nama event baru
-4. Program mencegah duplikat event
-5. Event berhasil diupdate
+4. Event berhasil diupdate
 
 ### 8. Hapus Event
 1. Pilih nomor event yang ingin dihapus
