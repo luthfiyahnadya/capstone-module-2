@@ -190,7 +190,5 @@ A: Tidak, data tersimpan di memory. Untuk menyimpan permanen perlu tambahkan fil
 
 ---
 
-## Terima Kasih!
-
 **Nama**: Nadya Luthfiyah  
 **Project**: Capstone Module 2
