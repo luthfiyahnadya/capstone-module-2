@@ -1,13 +1,10 @@
-# SMILES for Indies
-## Sistem Manajemen Inventori dan Laporan Ekonomi Seller Indie
-
----
+# SMILES for Indies (Sistem Manajemen Inventori dan Laporan Ekonomi Seller Indie)
 
 ## Deskripsi Program
 
 Sistem manajemen inventori sederhana yang dirancang khusus untuk indie seller yang berjualan merchandise di berbagai event seperti Comifuro, AFA Indonesia, Cocoma, dan online store. Program ini membantu mengelola produk, event, dan transaksi penjualan dengan fitur recycle bin untuk keamanan data.
 
----
+
 
 ## Fitur Utama
 
@@ -41,7 +38,8 @@ Sistem manajemen inventori sederhana yang dirancang khusus untuk indie seller ya
 * **Lihat Recycle Bin**: Daftar produk yang dihapus
 * **Restore Produk**: Kembalikan produk ke inventory dengan ID yang sama
 
----
+
+
 
 ## Cara Menggunakan Program
 
@@ -144,7 +142,7 @@ Menampilkan tabel daftar event dengan nomor urut dan nama event.
 3. Input jumlah yang ingin dijual
 4. Pilih event tempat transaksi
 5. Program memproses:
-   - Auto-generate Transaction ID (T1, T2, T3...)
+   - Auto-generate Transaction ID
    - Update stok otomatis
    - Hitung revenue dan profit
    - Catat tanggal otomatis
@@ -204,5 +202,4 @@ A: Tidak, data tersimpan di memory. Untuk menyimpan permanen perlu tambahkan fil
 ## Terima Kasih!
 
 **Nama**: Nadya Luthfiyah  
-**Project**: Capstone Module 1 - Python Programming  
-**Tanggal**: Februari 2026
+**Project**: Capstone Module 2
