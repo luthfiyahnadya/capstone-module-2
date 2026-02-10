@@ -398,11 +398,7 @@ def process_sale():
     product = inventory[product_index]
 
     #Tampilkan detail produk
-    print("\nDETAIL PRODUK:")
-    print(f"Nama: {product['product_name']}")
-    print(f"Kategori: {product['category']}")
-    print(f"Harga Jual: Rp {product['sell_price']:,}")
-    print(f"Stok Tersedia: {product['stock']}")
+    display_product_detail(product)
 
     if product['stock'] <= 5:
         print(f"\nPERINGATAN STOK RENDAH! Hanya tersisa {product['stock']} unit!")
