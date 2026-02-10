@@ -371,6 +371,8 @@ def delete_event():
 
 #TRANSACTION MANAGEMENT
 
+#A. PROSES PENJUALAN
+
 #Helper Function - Membuat Transaction ID
 def generate_transaction_id():
     if len(transactions) == 0:
@@ -381,23 +383,6 @@ def generate_transaction_id():
     new_number = number + 1
 
     return f"T{new_number}"
-
-#Helper Function - Tampilkan Transaksi (dalam tabel)
-def display_transactions_table(transactions_list):
-    table = PrettyTable(["ID Transaksi", "Produk", "Jumlah", "Harga", "Pendapatan", "Profit", "Event", "Tanggal"])
-
-    for t in transactions_list:
-        table.add_row([t['transaction_id'], t['product_name'], t['quantity_sold'], f"Rp {t['sell_price']:,}", f"Rp {t['revenue']:,}", f"Rp {t['profit']:,}", t['event_name'], t['date']])
-
-    return table
-
-#Helper Function - Display summary informasi
-def display_summary(title, transaction_count, total_items, total_revenue, total_profit):
-    print(f"\nRINGKASAN: {title}")
-    print(f"Total Transaksi: {transaction_count}")
-    print(f"Total Item Terjual: {total_items}")
-    print(f"Total Pendapatan: Rp {total_revenue:,}")
-    print(f"Total Profit: Rp {total_profit:,}")
 
 #Main Function - Memproses Transaksi
 def process_sale():
@@ -414,7 +399,10 @@ def process_sale():
 
     #Tampilkan detail produk
     print("\nDETAIL PRODUK:")
-    display_product_detail
+    print(f"Nama: {product['product_name']}")
+    print(f"Kategori: {product['category']}")
+    print(f"Harga Jual: Rp {product['sell_price']:,}")
+    print(f"Stok Tersedia: {product['stock']}")
 
     if product['stock'] <= 5:
         print(f"\nPERINGATAN STOK RENDAH! Hanya tersisa {product['stock']} unit!")
@@ -441,12 +429,13 @@ def process_sale():
         return
 
     #Memproses dan mencatat transaksi
-    transaction_id = generate_transaction_id() #auto-generate id
-    inventory[product_index]['stock'] -= quantity #update stock
+    transaction_id = generate_transaction_id()
+    inventory[product_index]['stock'] -= quantity
 
-    revenue = product['sell_price'] * quantity #menghitung revenue
-    profit = (product['sell_price'] - product['cost_price']) * quantity #menghitung profit
-    current_date = datetime.now().strftime("%Y-%m-%d") #mendapatkan tanggal saat ini
+    revenue = product['sell_price'] * quantity
+    profit = (product['sell_price'] - product['cost_price']) * quantity
+
+    current_date = datetime.now().strftime("%Y-%m-%d")
 
     transaction = {
         'transaction_id': transaction_id,
@@ -475,27 +464,36 @@ def process_sale():
     print(f"Tanggal: {current_date}")
     print(f"Sisa Stok: {inventory[product_index]['stock']}")
 
-#Helper Function - Menampilkan Seluruh Transaksi
-def show_all_transactions():
-    print("\nSEMUA TRANSAKSI")
+# B. LIHAT RIWAYAT TRANSAKSI
 
-    if len(transactions) == 0:
-        print("Belum ada transaksi!")
-        return
+#Helper Function - Tampilkan Transaksi (dalam tabel)
+def display_transactions_table(transactions_list):
+    table = PrettyTable(["ID Transaksi", "Produk", "Jumlah", "Harga", "Pendapatan", "Profit", "Event", "Tanggal"])
 
-    table = display_transactions_table(transactions)
-    print(table)
+    for t in transactions_list:
+        table.add_row([t['transaction_id'], t['product_name'], t['quantity_sold'], f"Rp {t['sell_price']:,}", f"Rp {t['revenue']:,}", f"Rp {t['profit']:,}", t['event_name'], t['date']])
 
+    return table
+
+#Helper Function - Display summary dengan perhitungan otomatis
+def display_summary(transactions_list):
+    #Hitung total
+    total_items = 0
     total_revenue = 0
     total_profit = 0
 
-    for t in transactions:
+    for t in transactions_list:
+        total_items += t['quantity_sold']
         total_revenue += t['revenue']
         total_profit += t['profit']
 
-    print(f"\nTOTAL: {len(transactions)} transaksi | Pendapatan: Rp {total_revenue:,} | Profit: Rp {total_profit:,}")
+    #Tampilkan ringkasan
+    print(f"\nTotal Transaksi: {len(transactions_list)}")
+    print(f"Total Item Terjual: {total_items}")
+    print(f"Total Pendapatan: Rp {total_revenue:,}")
+    print(f"Total Profit: Rp {total_profit:,}")
 
-#Helper Function - Menampilkan berdasarkan event
+#Helper Function - Menampilkan riwayat transaksi berdasarkan event
 def filter_by_event():
     print("\nFILTER BERDASARKAN EVENT")
 
@@ -503,7 +501,7 @@ def filter_by_event():
         print("Belum ada transaksi!")
         return
 
-    #Dapatkan event unik dari daftar transaksi
+    #Menampilkan event yang digunakan dalam transaksi
     events_in_transactions = []
     for t in transactions:
         if t['event_name'] not in events_in_transactions:
@@ -513,7 +511,6 @@ def filter_by_event():
         print("Belum ada transaksi!")
         return
 
-    #Tampilkan event yang digunakan dalam transaksi
     print("\nEvent yang tersedia:")
     for i, event in enumerate(events_in_transactions, 1):
         print(f"  {i}. {event}")
@@ -537,23 +534,13 @@ def filter_by_event():
         if t['event_name'] == selected_event:
             filtered.append(t)
 
+    #Tampilkan list transaksi yang telah di-filter beserta summary-nya
     print(f"\nTRANSAKSI DI: {selected_event}")
 
     table = display_transactions_table(filtered)
     print(table)
 
-    #Hitung total
-    total_revenue = 0
-    total_profit = 0
-    total_items = 0
-
-    for t in filtered:
-        total_revenue += t['revenue']
-        total_profit += t['profit']
-        total_items += t['quantity_sold']
-
-    #Tampilkan ringkasan menggunakan helper
-    display_summary(selected_event, len(filtered), total_items, total_revenue, total_profit)
+    display_summary(filtered)
 
 #Helper Function - Menampilkan berdasarkan produk
 def filter_by_product():
@@ -563,7 +550,7 @@ def filter_by_product():
         print("Belum ada transaksi!")
         return
 
-    #Dapatkan produk unik dari transaksi
+    #Menampilkan produk yang terjual (ada pada transaksi)
     products_sold = {}
     for t in transactions:
         if t['product_id'] not in products_sold:
@@ -573,7 +560,6 @@ def filter_by_product():
         print("Belum ada transaksi!")
         return
 
-    #Tampilkan produk
     print("\nProduk yang pernah terjual:")
     product_list = list(products_sold.items())
 
@@ -599,23 +585,13 @@ def filter_by_product():
         if t['product_id'] == selected_id:
             filtered.append(t)
 
+    #Tampilkan list transaksi yang telah di-filter beserta summary-nya
     print(f"\nRIWAYAT PENJUALAN: {selected_name}")
 
     table = display_transactions_table(filtered)
     print(table)
 
-    #Hitung total
-    total_items = 0
-    total_revenue = 0
-    total_profit = 0
-
-    for t in filtered:
-        total_items += t['quantity_sold']
-        total_revenue += t['revenue']
-        total_profit += t['profit']
-
-    #Tampilkan ringkasan menggunakan helper
-    display_summary(selected_name, len(filtered), total_items, total_revenue, total_profit)
+    display_summary(filtered)
 
 #Main Function - Menampilkan Riwayat Transaksi
 def view_transactions():
@@ -629,7 +605,16 @@ def view_transactions():
         choice = input("\nPilih opsi: ").strip()
 
         if choice == "1":
-            show_all_transactions()
+            print("\nSEMUA TRANSAKSI")
+            
+            if len(transactions) == 0:
+                print("Belum ada transaksi!")
+            else:
+                table = display_transactions_table(transactions)
+                print(table)
+                
+                display_summary(transactions)
+                
         elif choice == "2":
             filter_by_event()
         elif choice == "3":
@@ -713,9 +698,9 @@ def main_menu():
         print("  6. Tambah Event Baru")
         print("  7. Update Event")
         print("  8. Hapus Event")
-        print("\nPENJUALAN & TRANSAKSI")
+        print("\nPENCATATAN TRANSAKSI")
         print("  9. Proses Penjualan")
-        print("  10. Lihat Riwayat Penjualan")
+        print("  10. Lihat Riwayat Transaksi")
         print("\nRECYCLE BIN")
         print("  11. Lihat Recycle Bin")
         print("  12. Restore produk dari Recycle Bin")
