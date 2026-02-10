@@ -139,7 +139,7 @@ Menampilkan tabel daftar event dengan nomor urut dan nama event.
    - Catat tanggal otomatis
 6. Program menampilkan informasi transaksi lengkap
 
-### 10. Lihat Riwayat Penjualan
+### 10. Lihat Riwayat Transaksi
 
 **Sub-menu:**
 1. **Lihat Semua Transaksi**: Menampilkan tabel semua transaksi dengan total pendapatan dan profit
