@@ -18,7 +18,7 @@ Sistem manajemen inventori sederhana yang dirancang khusus untuk indie seller ya
 * **Update Event**: Edit nama event (contoh: fix typo "Comifro" → "Comifuro")
 * **Hapus Event**: Penghapusan permanen dengan konfirmasi
 
-### Manajemen Transaksi (Star Feature!)
+### Pencatatan Transaksi
 * **Proses Penjualan**:
   * Pilih produk yang ingin dijual berdasarkan ID
   * Pilih event tempat terjadinya transaksi
